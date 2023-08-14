@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:rekammedishbb/main_screen/rekam_medis.dart';
+import 'package:rekammedishbb/second_screen/isi_data_pasien_copy.dart';
 
 import '../main_screen/logout_screen.dart';
 import '../services/auth.dart';
@@ -230,9 +231,29 @@ class _DetailRekamMedisState extends State<DetailRekamMedis> {
 
                   Row(
                     children: [
-                      Spacer(),
+
                       SizedBox(
-                        width: 140,
+                        //width: 140,
+                        child: ElevatedButton(
+                            onPressed: (){
+                              //copy data
+                              print('tombol copy dipencet');
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>IsiDataPasienCopy(tf: tf,)));
+
+
+                            },
+                            child: Row(
+                              children: [
+                                Icon(Icons.delete),
+                                Text("  Copy Data")
+                              ],
+                            )),
+                      ),
+
+                      Spacer(),
+
+                      SizedBox(
+                        //width: 140,
                         child: ElevatedButton(
                             onPressed: (){
 
@@ -252,6 +273,7 @@ class _DetailRekamMedisState extends State<DetailRekamMedis> {
                               ],
                             )),
                       ),
+
                     ],
                   ),
 

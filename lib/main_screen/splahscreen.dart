@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:rekammedishbb/main_screen/dashboard_screen.dart';
 import 'package:rekammedishbb/main_screen/login_screen.dart';
 import 'package:rekammedishbb/services/auth.dart';
@@ -143,19 +144,33 @@ class _SplashScreenState extends State<SplashScreen> {
                           child: ElevatedButton(
 
                               onPressed: (){
-
-                                if(auth.user!.jabatan == 0 ){
+                                Route route = MaterialPageRoute(builder: (context) => DashboardScreen());
+                                Navigator.pushReplacement(context, route);
+                                /*if(auth.user!.jabatan == 0 ){
                                   Route route = MaterialPageRoute(builder: (context) => DashboardScreen());
                                   Navigator.pushReplacement(context, route);
                                   print('Anda adalah Dokter');
                                   //Navigator.push(context, MaterialPageRoute(builder: (context)=>DashboardScreen()));
                                 }else if(auth.user!.jabatan == 1){
                                   print('Anda adalah Admin');
+                                  Route route = MaterialPageRoute(builder: (context) => DashboardScreen());
+                                  Navigator.pushReplacement(context, route);
                                 }else if(auth.user!.jabatan == 2){
                                   print('Anda adalah Petugas Admin');
                                   Route route = MaterialPageRoute(builder: (context) => DashboardScreen());
                                   Navigator.pushReplacement(context, route);
-                                }
+                                }else{
+                                  String toast = 'User Jabatan tidak dikenali';
+                                  Fluttertoast.showToast(
+                                      msg: toast,
+                                      toastLength: Toast.LENGTH_SHORT,
+                                      gravity: ToastGravity.BOTTOM,
+                                      timeInSecForIosWeb: 1,
+                                      backgroundColor: Colors.red,
+                                      textColor: Colors.white,
+                                      fontSize: 16.0
+                                  );
+                                }*/
 
 
                               },
