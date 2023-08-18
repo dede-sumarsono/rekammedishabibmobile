@@ -10,6 +10,7 @@ import 'package:rekammedishbb/main_screen/logout_screen.dart';
 import 'package:rekammedishbb/main_screen/data_pasien.dart';
 import 'package:rekammedishbb/main_screen/register.dart';
 import 'package:rekammedishbb/main_screen/rekam_medis.dart';
+import 'package:rekammedishbb/revisi/rekam_medis_revisi.dart';
 import 'package:rekammedishbb/second_screen/isi_data_pasien_untuk_dokter.dart';
 import 'package:rekammedishbb/second_screen/total_pasien.dart';
 import 'package:rekammedishbb/second_screen/user_list.dart';
@@ -379,6 +380,27 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Navigator.pushReplacement(context, route);
               },
             ),
+
+
+            /////////Rekam Medis Revisi
+            ListTile(
+              title: Text("Rekam Medis Revisi",style: GoogleFonts.nunito(color: Colors.white),),
+              //leading: Icon(Icons.book,color: Colors.white,),
+              leading: SvgPicture.asset('assets/image/book_edit.svg'),
+              onTap: (){
+                print('Rekam Medis Clicked');
+                Route route = MaterialPageRoute(builder: (context) => RekamMedisRevisi());
+                Navigator.pushReplacement(context, route);
+              },
+            ),
+
+
+
+
+            /////////////////////
+
+
+
 
 
           ],
