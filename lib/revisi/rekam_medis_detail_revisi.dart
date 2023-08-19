@@ -151,7 +151,9 @@ class _DetailRekamMedisRevisiState extends State<DetailRekamMedisRevisi> {
       ListView(
         padding: EdgeInsets.only(left: 20,right: 20),
         children: [
-          SizedBox(height: 40,),
+          SizedBox(height: 20,),
+          Text("Pasien",style: GoogleFonts.nunito(fontSize: 24,fontWeight: FontWeight.bold)),
+          SizedBox(height: 10,),
           Container(
             //height: MediaQuery.of(context).size.height*0.7,
             width: 40,
@@ -185,15 +187,7 @@ class _DetailRekamMedisRevisiState extends State<DetailRekamMedisRevisi> {
 
                   SizedBox(height: 15,),
 
-                  Row(
-                    children: [
-                      Text('No RM        ',style: GoogleFonts.nunito(fontSize: 18),),
-                      Text(' : ',style: GoogleFonts.nunito(fontSize: 18),),
-  //                    Text(tf['nomor'],style: GoogleFonts.nunito(fontSize: 18),),
-                    ],
-                  ),
 
-                  SizedBox(height: 10,),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -262,46 +256,6 @@ class _DetailRekamMedisRevisiState extends State<DetailRekamMedisRevisi> {
                     ],
                   ),
 
-                  SizedBox(height: 10,),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('J Pelayanan ',style: GoogleFonts.nunito(fontSize: 18),),
-                      Text(' : ',style: GoogleFonts.nunito(fontSize: 18),),
-//                      Flexible(child: Text(tf['jenis_pelayanan'],style: GoogleFonts.nunito(fontSize: 18), maxLines: 4,)),
-                    ],
-                  ),
-
-                  SizedBox(height: 10,),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Diagnosa     ',style: GoogleFonts.nunito(fontSize: 18),),
-                      Text(' : ',style: GoogleFonts.nunito(fontSize: 18),),
-//                      Flexible(child: Text(tf['diagnosa'],style: GoogleFonts.nunito(fontSize: 18), maxLines: 4,)),
-                    ],
-                  ),
-
-                  SizedBox(height: 10,),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Terapi           ',style: GoogleFonts.nunito(fontSize: 18),),
-                      Text(' : ',style: GoogleFonts.nunito(fontSize: 18),),
-//                      Flexible(child: Text(tf['terapi'],style: GoogleFonts.nunito(fontSize: 18), maxLines: 4,)),
-                    ],
-                  ),
-
-                  SizedBox(height: 10,),
-                  Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('Ketarangan  ',style: GoogleFonts.nunito(fontSize: 18),),
-                      Text(' : ',style: GoogleFonts.nunito(fontSize: 18),),
-//                      Flexible(child: Text(tf['keterangan'],style: GoogleFonts.nunito(fontSize: 18), maxLines: 4,)),
-                    ],
-                  ),
-
                   SizedBox(height: 20,),
 
                   Row(
@@ -356,11 +310,122 @@ class _DetailRekamMedisRevisiState extends State<DetailRekamMedisRevisi> {
               ),
             ),
           ),
-          SizedBox(height: 20,),
+          SizedBox(height: 30,),
 
-          Text("Riwayat Rekam Medis",style: GoogleFonts.nunito(fontSize: 18)),
+          Text("Riwayat Rekam Medis",style: GoogleFonts.nunito(fontSize: 24,fontWeight: FontWeight.bold)),
+
+          SizedBox(height: 5,),
+
+
+
+          Expanded(
+              child: Padding(
+                padding: EdgeInsets.all(8.0),
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: ClampingScrollPhysics(),
+                  itemCount: jsonList == null ? 0 : jsonList.length,
+                  //itemCount: jsonList.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Column(
+                      children: [
+                        SizedBox(height: 10,),
+                        Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.grey.withOpacity(0.5),
+                            borderRadius: BorderRadius.circular(10.0),
+                          ),
+
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    Text('No RM        ',style: GoogleFonts.nunito(fontSize: 18),),
+                                    Text(' : ',style: GoogleFonts.nunito(fontSize: 18),),
+                                    Text(isiandata['pasienrekam'][index]['nomor'],style: GoogleFonts.nunito(fontSize: 18),),
+                                  ],
+                                ),
+                                SizedBox(height: 5,),
+
+                                Row(
+                                  children: [
+                                    Text('J Pelayanan',style: GoogleFonts.nunito(fontSize: 18),),
+                                    Text(' : ',style: GoogleFonts.nunito(fontSize: 18),),
+                                    Text(isiandata['pasienrekam'][index]['jenis_pelayanan'],style: GoogleFonts.nunito(fontSize: 18),),
+                                  ],
+                                ),
+                                SizedBox(height: 5,),
+
+                                Row(
+                                  children: [
+                                    Text('J Poli           ',style: GoogleFonts.nunito(fontSize: 18),),
+                                    Text(' : ',style: GoogleFonts.nunito(fontSize: 18),),
+                                    Text(isiandata['pasienrekam'][index]['poli'],style: GoogleFonts.nunito(fontSize: 18),),
+                                  ],
+                                ),
+                                SizedBox(height: 5,),
+
+                                Row(
+                                  children: [
+                                    Text('Diagnosa    ',style: GoogleFonts.nunito(fontSize: 18),),
+                                    Text(' : ',style: GoogleFonts.nunito(fontSize: 18),),
+                                    Expanded(child: Text(isiandata['pasienrekam'][index]['diagnosa'].toString(),style: GoogleFonts.nunito(fontSize: 18),)),
+                                  ],
+                                ),
+                                SizedBox(height: 5,),
+
+                                Row(
+                                  children: [
+                                    Text('Terapi          ',style: GoogleFonts.nunito(fontSize: 18),),
+                                    Text(' : ',style: GoogleFonts.nunito(fontSize: 18),),
+                                    Expanded(child: Text(isiandata['pasienrekam'][index]['terapi'].toString(),style: GoogleFonts.nunito(fontSize: 18), maxLines: 5,)),
+                                  ],
+                                ),
+                                SizedBox(height: 5,),
+
+                                Row(
+                                  children: [
+                                    Text('Keterangan ',style: GoogleFonts.nunito(fontSize: 18),),
+                                    Text(' : ',style: GoogleFonts.nunito(fontSize: 18),),
+                                    Expanded(child: Text(isiandata['pasienrekam'][index]['keterangan'].toString(),style: GoogleFonts.nunito(fontSize: 18),maxLines: 5,)),
+                                  ],
+                                ),
+                                SizedBox(height: 5,),
+
+                                Row(
+                                  children: [
+                                    Text('Tgl Periksa  ',style: GoogleFonts.nunito(fontSize: 18),),
+                                    Text(' : ',style: GoogleFonts.nunito(fontSize: 18),),
+                                    Text(isiandata['pasienrekam'][index]['created_at'].substring(0,10),style: GoogleFonts.nunito(fontSize: 18),),
+                                  ],
+                                ),
+                                SizedBox(height: 5,),
+
+
+                              ],
+                            ),
+
+                          ),
+
+                        ),
+                      ],
+                    );
+                  }
+                ),
+                
+              )
+
+          ),
+
+
 
           SizedBox(height: 60,),
+
+
+
 
 
 
