@@ -3,28 +3,32 @@
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
-import 'package:rekammedishbb/main_screen/data_pasien.dart';
-import 'package:rekammedishbb/revisi/rekam_medis_detail_revisi.dart';
+import 'package:rekammedishbb/main_screen/dashboard_screen.dart';
+import 'package:rekammedishbb/main_screen/rekam_medis.dart';
+import 'package:rekammedishbb/revisi/data%20_pasien/isi_data_pasien_revisi.dart';
+import 'package:rekammedishbb/second_screen/isi_data_pasien.dart';
+import 'package:rekammedishbb/second_screen/isi_data_pasien_untuk_dokter.dart';
 
-import '../main_screen/dashboard_screen.dart';
-import '../main_screen/logout_screen.dart';
-import '../second_screen/detail_rekam_medis.dart';
-import '../services/auth.dart';
-import '../services/dio.dart';
-import 'data_antrian/data_antrian.dart';
-import 'data_pasien_revisi.dart';
+import '../../main_screen/logout_screen.dart';
+import '../../services/auth.dart';
+import '../../services/dio.dart';
+import '../data _pasien/lihat_data_pasien.dart';
+import '../data_pasien_revisi.dart';
+import '../rekam_medis_revisi.dart';
+import 'data_antrian_isi_dokter.dart';
 
-class RekamMedisRevisi extends StatefulWidget {
-  const RekamMedisRevisi({Key? key}) : super(key: key);
+
+class DataAntrian extends StatefulWidget {
+  const DataAntrian({Key? key}) : super(key: key);
 
   @override
-  State<RekamMedisRevisi> createState() => _RekamMedisRevisiState();
+  State<DataAntrian> createState() => _DataAntrianState();
 }
 
-class _RekamMedisRevisiState extends State<RekamMedisRevisi> {
+class _DataAntrianState extends State<DataAntrian> {
 
   final GlobalKey<ScaffoldState> _key = GlobalKey();
 
@@ -43,8 +47,10 @@ class _RekamMedisRevisiState extends State<RekamMedisRevisi> {
       String? token = await storage.read(key: 'token');
       Provider.of<Auth>(context, listen: false).getToken(token: token);
 
-      //Dio.Response response = await dio().get('/getdatarekammedis',options: Dio.Options(headers: {'Authorization' : 'Bearer $token'}));
-      Dio.Response response = await dio().get('/getpasien',options: Dio.Options(headers: {'Authorization' : 'Bearer $token'}));
+      //Dio.Response response = await dio().get('/getdaftarepasien',options: Dio.Options(headers: {'Authorization' : 'Bearer $token'}));
+      Dio.Response response = await dio().get('/getdaftarepasien2',options: Dio.Options(headers: {'Authorization' : 'Bearer $token'}));
+
+      print(response);
 
 
       if(response.statusCode == 200){
@@ -95,10 +101,9 @@ class _RekamMedisRevisiState extends State<RekamMedisRevisi> {
   }
 
 
-
   @override
   Widget build(BuildContext context) {
-
+    final userdata = Provider.of<Auth>(context);
     return Scaffold(
       key: _key,
       appBar: AppBar(
@@ -113,9 +118,9 @@ class _RekamMedisRevisiState extends State<RekamMedisRevisi> {
         title:Row(
           children: [
             //Icon(Icons.plus,color: Colors.white,),
-            SvgPicture.asset('assets/image/book_edit.svg',width: 24,height: 24),
+            SvgPicture.asset('assets/image/queue.svg',width: 25,height: 25),
             SizedBox(width: 9,),
-            Text('Rekam Medis',style: GoogleFonts.nunito(color: Colors.white)),
+            Text('Data Antrian',style: GoogleFonts.nunito(color: Colors.white)),
             Spacer(),
             IconButton(
                 onPressed: (){
@@ -126,9 +131,8 @@ class _RekamMedisRevisiState extends State<RekamMedisRevisi> {
       ),
 
 
-      body:
 
-      Column(
+      body: Column(
         children: [
 
           SizedBox(height: 20,),
@@ -167,14 +171,13 @@ class _RekamMedisRevisiState extends State<RekamMedisRevisi> {
                     return Card(
                         color: Colors.grey.withOpacity(0.01),
                         child: ListTile(
-                          title: Text(_foundData[index]['name']),
-                          //title: Text('hai'),
-                          //subtitle: Text('Jenis Layanan : Peralihan Hak'),
+                          title: Text(_foundData[index]['pasien']['name']),
+                          //title: Text('a'),
                           subtitle: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text("${_foundData[index]['jenis_kelamin']}"),
-                              //Text(_foundData[index]['poli'])
+                              Text("${_foundData[index]['pasien']['jenis_kelamin']}"),
+
                             ],
                           ),
                           trailing: Container(
@@ -184,7 +187,6 @@ class _RekamMedisRevisiState extends State<RekamMedisRevisi> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 Text(_foundData[index]['created_at'].substring(0,10)),
-                                //Text(_foundData[index]['status'])
                                 Icon(Icons.arrow_right_outlined),
                                 Spacer(),
 
@@ -194,19 +196,9 @@ class _RekamMedisRevisiState extends State<RekamMedisRevisi> {
                           ),
                           onTap: (){
 
-                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DetailRekamMedisRevisi(tf: _foundData[index]['id']),));
+                            //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>IsiDataPasienUntukDokter(tf: _foundData[index]),));
+                            Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DataAntrianIsiDokter(tf: _foundData[index]),));
                             //Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DetailRekamMedis(),));
-
-                            /*Fluttertoast.showToast(
-                                    msg: '$index',
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.BOTTOM,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.green,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0
-                                );*/
-                            //print(_foundData[index].toString());
                           },
                         ));
                   }),
@@ -222,6 +214,17 @@ class _RekamMedisRevisiState extends State<RekamMedisRevisi> {
 
 
 
+      /*floatingActionButton:
+      userdata.user!.jabatan != 2 ?
+      Container():
+      FloatingActionButton(
+        onPressed: (){
+          print('Tombol tambah telah diklik');
+          Navigator.push(context, MaterialPageRoute(builder: (context)=>IsiDataPasienRevisi()));
+        },
+        tooltip: 'Increment',
+        child: const Icon(Icons.add),
+      ),*/
 
       drawer: Drawer(
         backgroundColor: Color(0xff189CAB),
@@ -245,9 +248,8 @@ class _RekamMedisRevisiState extends State<RekamMedisRevisi> {
               leading: SvgPicture.asset('assets/image/book_edit.svg'),
               onTap: (){
                 print('Rekam Medis Clicked');
-                _key.currentState!.closeDrawer();
-                //Route route = MaterialPageRoute(builder: (context) => RekamMedisRevisi());
-                //Navigator.pushReplacement(context, route);
+                Route route = MaterialPageRoute(builder: (context) => RekamMedisRevisi());
+                Navigator.pushReplacement(context, route);
               },
             ),
 
@@ -270,9 +272,9 @@ class _RekamMedisRevisiState extends State<RekamMedisRevisi> {
               leading: SvgPicture.asset('assets/image/queue.svg',width: 22,height: 22,),
               onTap: (){
                 print('Data Pasien');
-                //Navigator.push(context, MaterialPageRoute(builder: (context)=>DataPasien()));
-                Route route = MaterialPageRoute(builder: (context) => DataAntrian());
-                Navigator.pushReplacement(context, route);
+                _key.currentState!.closeDrawer();
+                //Route route = MaterialPageRoute(builder: (context) => DataAntrian());
+                //Navigator.pushReplacement(context, route);
               },
             ),
             /////////////////////

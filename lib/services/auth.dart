@@ -428,7 +428,8 @@ class Auth extends ChangeNotifier{
 
   void deletePost ({required int id}) async {
     try{
-      Dio.Response response = await dio().post('/destroy/$id',options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
+      //Dio.Response response = await dio().post('/destroy/$id',options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
+      Dio.Response response = await dio().post('/deletepasien/$id',options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
       print(response.data.toString());
 
       //String toast = response.data['data'].toString();
@@ -510,7 +511,8 @@ class Auth extends ChangeNotifier{
 
   void createDataPasien ({required Map creds}) async {
     try{
-      Dio.Response response = await dio().post('/create',data: creds,options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
+      //Dio.Response response = await dio().post('/create',data: creds,options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
+      Dio.Response response = await dio().post('/tambahpasien',data: creds,options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
       print(response.data.toString());
 
       String toast = 'Data Sudah berhasil ditambahkan';
@@ -527,6 +529,76 @@ class Auth extends ChangeNotifier{
 
     } catch(e){
       String toast = 'Data tidak berhasil ditambahkan';
+      Fluttertoast.showToast(
+          msg: toast,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+      print(e);
+    }
+    notifyListeners();
+
+  }
+
+  void createDataRekaman ({required Map creds}) async {
+    try{
+      //Dio.Response response = await dio().post('/create',data: creds,options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
+      Dio.Response response = await dio().post('/buatrekaman',data: creds,options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
+      print(response.data.toString());
+
+      String toast = 'Antrian Sudah berhasil ditambahkan';
+      Fluttertoast.showToast(
+          msg: toast,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
+
+    } catch(e){
+      String toast = 'Antrian tidak berhasil ditambahkan';
+      Fluttertoast.showToast(
+          msg: toast,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.red,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+      print(e);
+    }
+    notifyListeners();
+
+  }
+
+
+  void updateRekaman ({required Map creds,required int id}) async {
+    try{
+      Dio.Response response = await dio().post('/updaterekaman/$id',data: creds,options: Dio.Options(headers: {'Authorization' : 'Bearer $_token'}));
+      print(response.data.toString());
+
+      String toast = 'Data Sudah berhasil diperbaharui';
+      Fluttertoast.showToast(
+          msg: toast,
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.green,
+          textColor: Colors.white,
+          fontSize: 16.0
+      );
+
+
+    } catch(e){
+      String toast = 'Data gagal diperbaharui';
       Fluttertoast.showToast(
           msg: toast,
           toastLength: Toast.LENGTH_SHORT,

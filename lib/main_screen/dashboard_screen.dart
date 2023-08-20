@@ -10,6 +10,8 @@ import 'package:rekammedishbb/main_screen/logout_screen.dart';
 import 'package:rekammedishbb/main_screen/data_pasien.dart';
 import 'package:rekammedishbb/main_screen/register.dart';
 import 'package:rekammedishbb/main_screen/rekam_medis.dart';
+import 'package:rekammedishbb/revisi/data_antrian/data_antrian.dart';
+import 'package:rekammedishbb/revisi/data_pasien_revisi.dart';
 import 'package:rekammedishbb/revisi/rekam_medis_revisi.dart';
 import 'package:rekammedishbb/second_screen/isi_data_pasien_untuk_dokter.dart';
 import 'package:rekammedishbb/second_screen/total_pasien.dart';
@@ -39,7 +41,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
     Dio.Response response = await dio().get('/getalluser',
         options: Dio.Options(headers: {'Authorization' : 'Bearer $token'}));
 
-    Dio.Response response2 = await dio().get('/getallpasien',
+    Dio.Response response2 = await dio().get('/getallpasien2',
         options: Dio.Options(headers: {'Authorization' : 'Bearer $token'}));
 
     print(response);
@@ -188,7 +190,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 print('Total Pasien');
                 //Navigator.push(context, MaterialPageRoute(builder: (context)=>UserList(tf: 'Pasien')));
                 //Navigator.push(context, MaterialPageRoute(builder: (context)=>TotalPasien()));
-                Navigator.push(context, MaterialPageRoute(builder: (context)=>DataPasien()));
+                Navigator.push(context, MaterialPageRoute(builder: (context)=>DataAntrian()));
 
               },
               child: Container(
@@ -358,7 +360,7 @@ class _DashboardScreenState extends State<DashboardScreen> {
               },
             ),
 
-            ListTile(
+            /*ListTile(
               title: Text("Rekam Medis",style: GoogleFonts.nunito(color: Colors.white),),
               //leading: Icon(Icons.book,color: Colors.white,),
               leading: SvgPicture.asset('assets/image/book_edit.svg'),
@@ -379,12 +381,15 @@ class _DashboardScreenState extends State<DashboardScreen> {
                 Route route = MaterialPageRoute(builder: (context) => DataPasien());
                 Navigator.pushReplacement(context, route);
               },
-            ),
+            ),*/
+
+
+            //////////////Revisi
 
 
             /////////Rekam Medis Revisi
             ListTile(
-              title: Text("Rekam Medis Revisi",style: GoogleFonts.nunito(color: Colors.white),),
+              title: Text("Rekam Medis",style: GoogleFonts.nunito(color: Colors.white),),
               //leading: Icon(Icons.book,color: Colors.white,),
               leading: SvgPicture.asset('assets/image/book_edit.svg'),
               onTap: (){
@@ -395,8 +400,29 @@ class _DashboardScreenState extends State<DashboardScreen> {
             ),
 
 
+            ListTile(
+              title: Text("Data Pasien",style: GoogleFonts.nunito(color: Colors.white),),
+              //leading: Icon(Icons.home,color: Colors.white,),
+              leading: SvgPicture.asset('assets/image/bookofhealth.svg',width: 22,height: 22,),
+              onTap: (){
+                print('Data Pasien');
+                //Navigator.push(context, MaterialPageRoute(builder: (context)=>DataPasien()));
+                Route route = MaterialPageRoute(builder: (context) => DataPasienRevisi());
+                Navigator.pushReplacement(context, route);
+              },
+            ),
 
-
+            ListTile(
+              title: Text("Antrian Pasien",style: GoogleFonts.nunito(color: Colors.white),),
+              //leading: Icon(Icons.home,color: Colors.white,),
+              leading: SvgPicture.asset('assets/image/queue.svg',width: 22,height: 22,),
+              onTap: (){
+                print('Data Pasien');
+                //Navigator.push(context, MaterialPageRoute(builder: (context)=>DataPasien()));
+                Route route = MaterialPageRoute(builder: (context) => DataAntrian());
+                Navigator.pushReplacement(context, route);
+              },
+            ),
             /////////////////////
 
 
